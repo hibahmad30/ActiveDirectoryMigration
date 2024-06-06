@@ -1,7 +1,7 @@
 <h1>On-Premise AD Migration to Microsoft Entra ID</h1>
 
 <h2>Description</h2>
-Vulnerability management is essential for organizations to identify and mitigate security vulnerabilities in their systems and networks. This project aims to explore the various stages of the vulnerability management lifecycle using Nessus Essentials and an insecure Windows 10 system. Nessus is a powerful tool that provides extensive scanning and remediation capabilities for vulnerability management. The following link provides an overview of how to create a virtual machine in Azure: https://learn.microsoft.com/en-us/azure/virtual-machines/windows/quick-create-portal. 
+Migrating to Microsoft Entra ID offers several advantages, including enhanced security, improved scalability, and centralized management of identities. This cloud-based IAM solution enables organizations to manage user access to resources more efficiently, enforce robust security policies, and ensure compliance with industry standards. By transitioning from an on-premise Active Directory to Microsoft Entra ID, organizations can leverage advanced features such as multi-factor authentication, conditional access policies, and seamless integration with other Microsoft cloud services.
 <br />
 
 <h2>Environments Used </h2>
@@ -99,34 +99,19 @@ Once the configuration is complete, navigate to 'All Users' in Microsoft Entra I
 <br/>
 <br/>
 <h2>Key takeaways:</h2>
-Credentialed scans are essential for identifying vulnerabilities in a system, as they allow Nessus to access and scan all parts of the system, including system files, registry entries, and application settings. This results in a more comprehensive and accurate assessment of the system's vulnerabilities.
+The migration from on-premise Active Directory to Microsoft Entra ID represents a significant step towards modernizing IT infrastructure. This project is crucial because it aligns with the growing trend of cloud adoption, which offers numerous benefits over traditional on-premise setups. By moving to Microsoft Entra ID, organizations can achieve greater flexibility and scalability, allowing them to respond more quickly to changing business needs. The cloud-based nature of Entra ID ensures that identity management services are available anytime and anywhere, supporting a remote and mobile workforce.
 <br/>
 <br/>
-Deprecated software is a major source of vulnerabilities, making it crucial to keep all software up to date, including your operating system, browsers, and applications. Deprecated software often contains known security vulnerabilities that have been addressed in newer versions. While vulnerability remediation does often involve applying patches and updating software, it may also require changing system configurations. Nessus scans can be used to identify these vulnerabilities and remediate them. 
+In this project, I successfully migrated an on-premise Active Directory (AD) environment to Microsoft Entra ID (formerly known as Azure AD). The primary goal was to leverage cloud-based identity and access management (IAM) solutions to enhance security, scalability, and manageability of user identities and resources. This migration involved setting up an Active Directory server, promoting it to a Domain Controller, creating an organizational structure, and finally migrating this setup to Microsoft Entra ID.
 <br/>
 <br/>
-Regularly scanning your systems on an ongoing basis is also crucial to address any new vulnerabilities that may appear. The vulnerability management lifecycle is a powerful tool used to ensure that vulnerabilities are addressed continuously: 
+The project commenced with the creation of a virtual machine in Azure using Windows Server 2019. This virtual machine served as the foundation for our Active Directory server. By navigating the Azure portal, I provisioned resources within a Resource Group, named the virtual machine instance, and set administrative login credentials. The setup included adding essential roles like Active Directory Domain Services and DNS server, which are crucial for promoting the server to a Domain Controller. The root domain 'activeshiftentra.com' was established using the Ionos service and configured as the new forest in AD.
 <br/>
 <br/>
-In the planning stage of vulnerability management (Stage 0), any stakeholders and/or resources that will be involved should be identified. Guidelines and metrics outlining any goals or expectations should also be provided. In this project, the target system was a Windows 10 virtual machine, and the goal was to gain an overview of how vulnerability management works. 
+Post configuration of the AD, I structured the organizational units (OUs) to simulate a typical corporate environment. This involved creating users, groups, and provisioning various devices such as computers, laptops, and servers. Additionally, I implemented Group Policy Objects (GPO) to enforce security settings across all OUs. For instance, the Default Domain Controller password policy was adjusted to enhance password security, which was crucial for maintaining a secure and compliant IT environment.
 <br/>
 <br/>
-In this project, the target system was a Windows 10 virtual machine, and the goal was to understand how various configuration changes to both the Windows 10 machine and Nessus can result in varying scan results. Another goal was to explore different vulnerability remediation techniques.
-<br/>
-<br/>
-In the asset discovery phase (Stage 1), an inventory of all hardware and software assets should be created and/or updated regularly. It is common to use specialized solutions for asset management. This stage also involves scanning the assets for vulnerabilities. In this project, the primary asset was the Windows 10 virtual machine, and Nessus Essentials was used as the vulnerability scanner. 
-<br/>
-<br/>
-Stage 2 of the vulnerability management lifecycle is vulnerability prioritization, where the vulnerabilities discovered in Stage 1 are prioritized based on their severity level. This stage focuses on maximizing efficiency. The prioritization is often based on threat intelligence sources such as CVE or CVSS, and may also be based upon how critical the particular asset is, and how likely it is to be exploited. In this project, the prioritization was primarily based on the severity levels provided by Nessus Essentials. 
-<br/>
-<br/>
-Stage 3 involves vulnerability resolution, which involves remediation, mitigation, or acceptance. Remediation may involve patching software or making changes to system configurations, and essentially removing the vulnerability from the system entirely. Mitigation either lessens the severity of the vulnerability or makes it more challenging to exploit, but does not remove it from the system. For vulnerabilities that are less severe or not as high of a priority, they may just be accepted rather than being remediated or mitigated. This project focused on remediation primarily, however it is still crucial to understand mitigation and acceptance when working on larger scale systems in an organization. 
-<br/>
-<br/>
-Stage 4, or the verification and monitoring phase, involves scanning the systems again to ensure that their remediation and mitigation efforts were effective. This is also to ensure that there were no new vulnerabilities created while making any changes to the system. 
-<br/>
-<br/>
-The final stage, reporting and improvement (Stage 5), involves documenting the vulnerabilities that were found, as well as their outcomes. This stage focuses on the most recent scans and actions taken in the life cycle, as vulnerability management is an ongoing process. It is very important to have clear, up-to-date, and comprehensive documentation, particularly when working with stakeholders.
+The final and critical phase of the project was migrating the on-premise AD to Microsoft Entra ID. This was facilitated by installing Microsoft Entra Connect on the server instance, which linked the on-premise AD to the cloud-based Entra ID. The domain 'activeshiftentra.com' was registered and verified in Azure. This step required configuring DNS settings in Azure DNS Zones and updating name servers through Ionos to ensure proper domain verification. Once the configuration was complete, all users from the on-premise AD were successfully migrated to Microsoft Entra ID, thus enabling centralized cloud-based identity management.
 
 <p align="center">
 <!--
