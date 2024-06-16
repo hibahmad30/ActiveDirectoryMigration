@@ -16,7 +16,8 @@ The migration from on-premise Active Directory to Microsoft Entra ID represents 
 <h2>Create the Active Directory Server:</h2> 
 
 <p align="center">
-We will begin by navigating to the Azure portal and spinning-up a virtual machine to host the AD server on. This involves creating a Resource Group to manage the resources we will be provisioning, naming the virtual machine instance, selecting the Windows Server 2019 image. and defining the login credentials for the Windows Server administrative account. The following link provides an overview of how to create a virtual machine in Azure:<br /><br />https://learn.microsoft.com/en-us/azure/virtual-machines/windows/quick-create-portal<br />
+We'll start by accessing the Azure portal to set up a virtual machine for hosting the Active Directory (AD) server. This process includes several steps such as creating a Resource Group to manage the resources we will be provisioning, naming the virtual machine instance, selecting the Windows Server 2019 image, and defining the login credentials for the Windows Server administrative account. The following link provides an overview of how to create a virtual machine in Azure:</b>
+For a detailed guide on creating a virtual machine in Azure, refer to the following link: https://learn.microsoft.com/en-us/azure/virtual-machines/windows/quick-create-portal
  <br/>
  <br/>
 <img src="https://i.imgur.com/wOCjWl1.png" alt="Provision Windows Server VM"/>
@@ -27,13 +28,13 @@ We will begin by navigating to the Azure portal and spinning-up a virtual machin
 
 <h2>Configure AD Server and Promote as Domain Controller:</h2> 
 <p align="center">
-Once the VM deployment is complete, we will navigate to the resource and copy the public IP address of the instance. Then, we will use RDP into the instance using the administrator credentials defined earlier. 
+After the virtual machine (VM) deployment is complete, we’ll navigate to the resource and copy its public IP address. Using this IP address, we’ll connect to the instance via Remote Desktop Protocol (RDP), utilizing the administrator credentials set up earlier.
 <br />
 <br />
 <img src="https://i.imgur.com/YYT0VMp.png" alt="RDP"/> 
 <br />
 <br />
-Once we are signed in and the VM has initialized, we will add the following roles to the server: Active Directory Domain Services, DNS server. This will promote the server as the Domain Controller. Once the installation is complete, we will need to create the root domain. I used the Ionos service to create a unique domain (activeshiftentra.com), and entered it under 'Add a new forest'. 
+Once we sign in and the VM has fully initialized, we will proceed to add the necessary roles to the server: Active Directory Domain Services and DNS Server. This configuration will elevate the server to function as the Domain Controller. After the roles are installed, we’ll need to set up the root domain. For this demonstration, I used the Ionos service to register a unique domain, activeshiftentra.com, and specified this domain under the 'Add a new forest' option. 
 <br />
 <br />
 <img src="https://i.imgur.com/n0ASKZO.png" alt="Server Manager"/> 
@@ -50,38 +51,38 @@ Once the configuration is complete, we will verify the deployment:
 <br/>
 <h2>Create Organizational Structure (Users, Groups, Workstations):</h2> 
  <p align="center">
-Now that we have successfully configured AD, we will now create organizational units (OUs), users, and provision some computers, laptops, and servers. I have created the following sample organzational structure to replicate and provision in AD:  
+With Active Directory (AD) successfully configured, our next steps involve setting up organizational units (OUs), creating user accounts, and provisioning various devices, including computers, laptops, and servers. Below is a sample organizational structure that we will replicate and implement in AD:
 <br/>
 <br/>
 <img src="https://i.imgur.com/R47I8uC.png" alt="Organizational Chart"/>
  <img src="https://i.imgur.com/OGMTuwh.png" alt="Create Users"/>
  <img src="https://i.imgur.com/4A8fSEY.png" alt="Provision Workstations and Servers"/>
- <br/>
- <br/>
-For practice, we will edit  the Group Policy Object (GPO) for the Default Domain Controller password policy which will apply to all Organizational Units (OUs) by navigating to following directories in the Group Policy Management Editor: 
-Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Password Policy. 
 <br/>
 <br/>
-<img src="https://i.imgur.com/gyYk45n.png" alt="Password Policy GPO"/>
+To practice user deprovisioning, I removed the Marketing, Sales, and Management organizational units (OUs) and retained only the IT OU. 
 <br/>
 <br/>
 <h2>Migrating AD to Entra ID:</h2> 
 <p align="center">
-We will now begin migrating our Active Directory setup to Microsoft Entra ID! On our server instance, we will install Microsoft Entra Connect by navigating to the following link: https://www.microsoft.com/en-us/download/details.aspx?id=47594. 
+
+Next, we’ll begin migrating our Active Directory (AD) setup to Microsoft Entra ID. On our server instance, we’ll start by installing Microsoft Entra Connect by navigating to the following link: https://www.microsoft.com/en-us/download/details.aspx?id=47594. 
 <br/>
 <br/>
 <img src="https://i.imgur.com/XOFJRy0.png" alt="Microsoft Entra Connect Download"/>
 <img src="https://i.imgur.com/vDNukck.png" alt="Microsoft Entra Connect Setup"/>
 <br/>
 <br/>
-We will then connect our AD by entering the domain name. The next step is to register the domain in Azure, and ensure that it matches the on-prem domain. As shown below, the Azure AD domain is not currently added: 
+Next, we’ll connect our Active Directory (AD) by entering the domain name. We need to register this domain in Azure and ensure it matches our on-premises domain. Currently, as shown below, the Azure AD domain has not yet been added:
 <br/>
 <br/>
 <img src="https://i.imgur.com/4hGLGb4.png" alt="Connect Domain"/>
 <img src="https://i.imgur.com/3IIfjIj.png" alt="Azure Domain Needed"/>
 <br/>
 <br/>
-To add the domain in Azure, navigate to Microsoft Entra ID, and to the following path: Manage > Custom domain names > Add custom domain > Enter same domain name > Verify. Then, save the value of 'Destination or points to address'. The verification will fail at this point, as we will need to configure our DNS Zone in Azure: DNS Zones > Create DNS Zone > Enter domain as Name. Once the DNS Zone has been deployed, add a record set, and enter the value recorded for 'Destination or points to address' of the custom domain configuration. Additionally, I navigated to Ionos and added the remaining name servers listed in Azure, which is neccessary for the Azure AD domain to verify. 
+To add the domain in Azure, navigate to Microsoft Entra ID, and to the following path: Manage > Custom domain names > Add custom domain > Enter same domain name > Verify. Then, save the value of 'Destination or points to address'. The verification will fail at this point, as we will need to configure our DNS Zone in Azure: DNS Zones > Create DNS Zone > Enter domain as Name. 
+<br/>
+<br/>
+Once the DNS Zone has been deployed, add a record set, and enter the value recorded for 'Destination or points to address' of the custom domain configuration. Additionally, I navigated to Ionos and added the remaining name servers listed in Azure, which is neccessary for the Azure AD domain to verify. 
 <br/>
 <br/>
 <img src="https://i.imgur.com/GM6epIi.png" alt="Azure Custom Domain Name"/>
