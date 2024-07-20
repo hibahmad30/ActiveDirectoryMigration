@@ -72,6 +72,7 @@ Next, we’ll begin migrating our Active Directory (AD) setup to Microsoft Entra
 <img src="https://i.imgur.com/vDNukck.png" alt="Microsoft Entra Connect Setup"/>
 <br/>
 <br/>
+<p align="center">
 Next, we’ll connect our Active Directory (AD) by entering the domain name. We need to register this domain in Azure and ensure it matches our on-premises domain. Currently, as shown below, the Azure AD domain has not yet been added:
 <br/>
 <br/>
